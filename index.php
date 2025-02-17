@@ -1,7 +1,9 @@
 <?php 
 session_start(); 
+$basePath = dirname($_SERVER['SCRIPT_NAME']); /* echo $basePath;  */
 $err = '';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,7 @@ $err = '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="queries.css">
-    <title>Key_Cabinet_With_E-passport_System</title>
+    <title>Key Cabinet With E-passport System</title>
   </head>
 
   <?php
@@ -116,8 +118,9 @@ $err = '';
 
     <script>
       function logout() {
-        window.location.href = '/Key_Cabinet_With_E-passport_System/logout.php';
+        window.location.href = "<?php echo $basePath; ?>" + "/logout.php";
       }
     </script>
+
   </body>
 </html>

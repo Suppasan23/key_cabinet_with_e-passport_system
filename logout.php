@@ -1,5 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header("refresh: 0; url=/Key_Cabinet_With_E-passport_System");
+$basePath = dirname($_SERVER['SCRIPT_NAME']); /* echo $basePath; */ 
+header("refresh: 0; url=$basePath");
 ?>
