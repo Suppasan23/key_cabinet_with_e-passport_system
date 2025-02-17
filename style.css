@@ -1,0 +1,281 @@
+/*
+
+--- 01 TYPOGRAPHY SYSTEM
+
+-Font sizes (rem)
+1.4 / 1.5 / 1.6 / 2.4
+
+-Font weights
+Regular / SemiBold
+
+-Line heights
+Default: 1
+
+--- 02 COLORS
+
+Header-Background: #800000
+Outboard-Boarder: black
+Header-Text: white
+Content-Background: #f2f2f2
+Inboard-Boarder: #1e1e1e
+Input-Color #fff4d6
+Button-Color #e9ff32
+Footer-Background #cbe3c2
+
+--- 03 WHITESPACE
+
+-Spacing system (rem)
+0.2 / 0.4 / 0.8 / 1.2 / 1.6 / 2.4 / 3.2 / 4.8 / 6.4 / 8.0 / 9.6 / 12.8
+
+*/
+
+@font-face {
+  font-family: "NotoSansThaiLooped-SemiBold";
+  src: url("fonts/NotoSansThaiLooped-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "NotoSansThaiLooped-Regular";
+  src: url("fonts/NotoSansThaiLooped-Regular.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 1;
+  box-sizing: border-box;
+}
+
+html {
+  /* 10px / 16px = 0.625 = 62.5% */
+  font-size: 62.5%;
+}
+
+.Main_Container {
+  /* STARTER */
+  border: 0.3rem solid black;
+  max-width: 88rem;
+  margin: 0 auto;
+
+  /* CSS GRID */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 24rem auto;
+}
+/*---------------------------------------------------------------------------*/
+
+.logo {
+  background-color: #800000;
+  padding: 0.6rem 0.9rem 0.6rem 0.9rem;
+  border-bottom: 0.1rem solid #1e1e1e;
+  /* FLEXBOX */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  background-color: #800000;
+  color: white;
+  font-family: "NotoSansThaiLooped-SemiBold";
+  font-size: 2.4rem;
+
+  border-left: 0.1px solid #1e1e1e;
+  border-bottom: 0.1rem solid #1e1e1e;
+  /* FLEXBOX */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+/*---------------------------------------------------------------------------*/
+
+/*NOT LOG-IN ZONE*/
+.content {
+  background-color: #f2f2f2;
+  border-bottom: 0.1rem solid #1e1e1e;
+  grid-column: 1/-1;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.6rem;
+
+  /* CSS GRID */
+  display: grid;
+  grid-template-columns: repeat(32, 1fr);
+  grid-template-rows: 0.3fr 1.2fr 0.8fr 0.8fr 1.5fr 0.2fr;
+  column-gap: 0.5rem;
+  justify-items: center;
+}
+
+.content-top {
+  grid-column: 1/-1;
+  grid-row: 2/3;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.content-username {
+  grid-column: 1/13;
+  grid-row: 3/4;
+  align-self: center;
+  justify-self: end;
+}
+
+.content-username-input {
+  background-color: #fff4d6;
+  font-size: 1.6rem;
+  height: 2.2rem;
+  grid-column: 13/23;
+  grid-row: 3/4;
+  align-self: center;
+  justify-self: stretch;
+}
+
+.content-password {
+  grid-column: 1/13;
+  grid-row: 4/5;
+  align-self: center;
+  justify-self: end;
+}
+
+.content-password-input {
+  background-color: #fff4d6;
+  font-size: 1.6rem;
+  height: 2.2rem;
+  grid-column: 13/23;
+  grid-row: 4/5;
+  align-self: center;
+  justify-self: stretch;
+}
+
+.err-message {
+  color: #cc0000;
+  grid-column: 15/-1;
+  grid-row: 5/6;
+  align-self: center;
+  justify-self: start;
+}
+
+.button-login {
+  background-color: #e9ff32;
+  height: 4rem;
+  width: 6rem;
+  border-radius: 0.5rem;
+  padding: 0rem 0rem 0.2rem 0rem;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.5rem;
+
+  grid-column: 1/23;
+  grid-row: 5/6;
+  align-self: center;
+  justify-self: end;
+}
+
+.button-login:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}
+
+.button-login:active {
+  transform: scale(0.96);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*LOGED-IN ZONE*/
+
+.content-logged-in {
+  background-color: #f2f2f2;
+  border-bottom: 0.1rem solid #1e1e1e;
+  grid-column: 1/-1;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.6rem;
+
+  /* CSS GRID */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.4fr 0.5fr 2fr 0.1fr 0.5fr 1.2fr 0.2fr;
+  column-gap: 0.5rem;
+  justify-items: center;
+}
+
+.content-top-logged-in {
+  grid-column: 1/-1;
+  grid-row: 2/3;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.content-access-number {
+  font-size: 5rem;
+  padding: 0rem 0rem 0rem 0rem;
+
+  grid-column: 1/-1;
+  grid-row: 3/4;
+  align-self: center;
+  justify-self: center;
+}
+
+.content-old-number {
+  grid-column: 1/-1;
+  grid-row: 5/6;
+  align-self: center;
+  justify-self: center;
+}
+
+.username-showing_button-logout {
+  grid-column: 1/-1;
+  grid-row: 6/7;
+  align-self: center;
+  justify-self: center;
+
+  /* FLEXBOX */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.username-showing {
+  color: #2b8a3e;
+}
+
+.button-logout {
+  background-color: #dee2e6;
+  height: 4rem;
+  width: 6rem;
+  border-radius: 0.5rem;
+  padding: 0rem 0rem 0.2rem 0rem;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.5rem;
+}
+
+.button-logout:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}
+
+.button-logout:active {
+  transform: scale(0.96);
+}
+
+/*---------------------------------------------------------------------------*/
+
+.footer {
+  background-color: #cbe3c2;
+  grid-column: 1/-1;
+  padding: 0.8rem 0rem 0.8rem 0.9rem;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.4rem;
+
+  /* FLEXBOX */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-header {
+  font-family: "NotoSansThaiLooped-SemiBold";
+  font-size: 1.4rem;
+}

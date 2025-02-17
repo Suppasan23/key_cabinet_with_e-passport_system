@@ -1,0 +1,201 @@
+/*  
+  rem and em do NOT depend on html font-size in media queries 
+  Instead, 1rem = 1em = 16px
+*/
+
+/*Header 816------------------------------------*/
+@media (max-width: 51em /*816÷16*/) {
+  .header {
+    flex-direction: row;
+    font-size: 2.3rem;
+    gap: 0.6rem;
+  }
+}
+
+/*Header 784-------------------------------------------------*/
+@media (max-width: 49em /*784÷16*/) {
+  .header {
+    flex-direction: row;
+    font-size: 2.2rem;
+    gap: 0.6rem;
+  }
+}
+
+/*Input & Button 768-------------------------------------------------*/
+@media (max-width: 48em /*768÷16*/) {
+  .content-username-input {
+    grid-column: 13/24;
+  }
+  .content-password-input {
+    grid-column: 13/24;
+  }
+  .button-login {
+    grid-column: 1/24;
+  }
+}
+
+/*Header 752-------------------------------------------------*/
+@media (max-width: 47em /*752÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 2.1rem;
+    gap: 0rem;
+  }
+}
+
+/*Input & Button 680-------------------------------------------------*/
+@media (max-width: 42.5em /*680÷16*/) {
+  .content-username-input {
+    grid-column: 13/25;
+  }
+  .content-password-input {
+    grid-column: 13/25;
+  }
+  .button-login {
+    grid-column: 1/25;
+  }
+}
+
+/*Input & Button 608-------------------------------------------------*/
+@media (max-width: 38em /*608÷16*/) {
+  .content-username-input {
+    grid-column: 13/26;
+  }
+  .content-password-input {
+    grid-column: 13/26;
+  }
+  .button-login {
+    grid-column: 1/26;
+  }
+}
+
+/*Input & Button 544-------------------------------------------------*/
+@media (max-width: 34em /*544÷16*/) {
+  .content-username-input {
+    grid-column: 13/27;
+  }
+  .content-password-input {
+    grid-column: 13/27;
+  }
+  .button-login {
+    grid-column: 1/27;
+  }
+}
+
+/*Input & Button 496-------------------------------------------------*/
+@media (max-width: 31em /*496÷16*/) {
+  .content-username-input {
+    grid-column: 13/28;
+  }
+  .content-password-input {
+    grid-column: 13/28;
+  }
+  .button-login {
+    grid-column: 1/28;
+  }
+}
+
+/*err-message 472-------------------------------------------------*/
+@media (max-width: 29.5em /*472÷16*/) {
+  .err-message {
+    grid-column: 14/-1;
+  }
+}
+
+/*Input & Button 456-------------------------------------------------*/
+@media (max-width: 28.5em /*456÷16*/) {
+  .content-username-input {
+    grid-column: 13/29;
+  }
+  .content-password-input {
+    grid-column: 13/29;
+  }
+  .button-login {
+    grid-column: 1/29;
+  }
+}
+
+/*Header & Input & Button  416-------------------------------------------------*/
+@media (max-width: 26em /*416÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 2rem;
+    gap: 0rem;
+  }
+
+  .content-username-input {
+    grid-column: 13/30;
+  }
+  .content-password-input {
+    grid-column: 13/30;
+  }
+  .button-login {
+    grid-column: 1/30;
+  }
+}
+
+/*Header 400-------------------------------------------------*/
+@media (max-width: 25em /*400÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 1.9rem;
+    gap: 0rem;
+  }
+
+  .err-message {
+    grid-column: 13/-1;
+  }
+}
+
+/*Header 384-------------------------------------------------*/
+@media (max-width: 24em /*384÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 1.8rem;
+    gap: 0rem;
+  }
+}
+
+/*Header 368-------------------------------------------------*/
+@media (max-width: 23em /*368÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 1.7rem;
+    gap: 0rem;
+  }
+}
+
+/*err-message 360-------------------------------------------------*/
+@media (max-width: 22.5em /*360÷16*/) {
+  .err-message {
+    grid-column: 9/-1;
+  }
+}
+
+/*Header 352-------------------------------------------------*/
+@media (max-width: 22em /*352÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 1.6rem;
+    gap: 0rem;
+  }
+}
+
+/*Header & Input & Button 336-------------------------------------------------*/
+@media (max-width: 21em /*336÷16*/) {
+  .header {
+    flex-direction: column;
+    font-size: 1.5rem;
+    gap: 0rem;
+  }
+
+  .content-username-input {
+    grid-column: 13/31;
+  }
+  .content-password-input {
+    grid-column: 13/31;
+  }
+  .button-login {
+    grid-column: 1/31;
+  }
+}
