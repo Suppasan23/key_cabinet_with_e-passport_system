@@ -1,9 +1,48 @@
 <?php 
-session_start(); 
+session_start();
 $basePath = dirname($_SERVER['SCRIPT_NAME']); /* echo $basePath;  */
 $err = '';
-?>
 
+/* บัญชีผู้ใช้ที่บล็อกเอาไว้ */
+$blocked_users =
+[
+"uthaitip.b",
+"pornpen.j",
+"pranrada.j",
+"penpak.g",
+"kraiwit.c",
+"chaichumpon.c",
+"wilawan.d",
+"angkana.sr",
+"tipawan.k",
+"nitwaree.c",
+"kanchana.t",
+"boonsi.n",
+"pakamas.l",
+"siriporn.a",
+"pakamas.l",
+"napaphat.c",
+"thananya.c",
+"pimpisut.c",
+"piyawan.b",
+"piyawan.b",
+"natthaphon.c",
+"aphiwat.r",
+"pinchai.k",
+"pattraporn.n",
+"patcharee.to",
+"nopadon.k",
+"thanet.s",
+"suphannee.s",
+"atcha.t",
+"nared.s",
+"yothaka.s",
+"sadudee.c",
+"napaporn.s",
+"pitchapa.p",
+"pornchanok.n",
+];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,33 +60,37 @@ $err = '';
   
     $username = $_POST['input_user'];
     $password = $_POST['input_pswd'];
-  
-    $usertype = strpos($username,"."); //หาว่าเป็นอาจารย์หรือนักศึกษา
+
+    $usertype = strpos($username, "."); // หาจุดในชื่อผู้ใช้ว่ามีหรือไม่
+
+    if ($usertype === false) { // ไม่ใช่อาจารย์ หรือ เจ้าหน้าที่ เพราะไม่มีจุดในชื่อผู้ใช้ ใช่หรือไม่?
+      $err = '<span>Access is Denied</span>';
+    }
+
+    elseif (in_array($username, $blocked_users)) { // เป็นผู้ใช้ที่บล็อกเอาไว้ ใช่หรือไม่?
+      $err = '<span>Access is Denied</span>';
+    }
+
+    else {
+      $loginUrl = 'http://elogin.rmutsv.ac.th';
                 
-          if(!empty($usertype))	// เป็นอาจารย์
-              {
-                  $loginUrl = 'http://elogin.rmutsv.ac.th';
-                      
-                  $ch = curl_init();
-                  curl_setopt($ch, CURLOPT_URL, $loginUrl);
-                  curl_setopt($ch, CURLOPT_POST, 1);
-                  curl_setopt($ch, CURLOPT_POSTFIELDS, 'username='.$username.'&password='.$password);
-                  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                  $store = curl_exec($ch);   //เอาชื่อและนามสกุลของผูล็อคอินมาเก็บไว้ในตัวแปร$store
-                  if( $store != 'none')
-                  {
-                      //echo "Successfully login <br />"
-                      $_SESSION['name'] = $store;
-                  }
-                  else
-                  {
-                      $err  = '<span>ชื่อหรือรหัสผ่าน<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไม่ถูกต้อง</span>';
-                  }
-              }
-          else	// เป็นนักศึกษา
-              {
-                  $err  = '<span>ปฏิเสธการเข้าถึง</span>';
-              }
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $loginUrl);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, 'username='.$username.'&password='.$password);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      
+      $store = curl_exec($ch);
+      
+      if ($store === false) {
+          $err = '<span>เกิดข้อผิดพลาดในการเชื่อมต่อ</span>';
+      } elseif ($store != 'none') {
+          $_SESSION['name'] = $store;
+      } else {
+          $err = '<span>ชื่อหรือรหัสผ่าน<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไม่ถูกต้อง</span>';
+      }
+    }
+
   }
   ?>
 
@@ -61,7 +104,6 @@ $err = '';
           <span>ตู้เก็บลูกกุญแจระบบรหัส E-Passport</span> 
           <span>คณะวิศวกรรมศาสตร์ มทร.ศรีวิชัย</span>
       </div>
-
 
       <?php 
         if(!isset($_SESSION['name'])) /*ไม่ได้ล็อคอิน*/
