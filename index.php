@@ -26,6 +26,7 @@ $blocked_users =
 "pimpisut.c",
 "piyawan.b",
 "piyawan.b",
+"natthaphon.c",
 "aphiwat.r",
 "pinchai.k",
 "pattraporn.n",
