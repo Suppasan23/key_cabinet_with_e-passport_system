@@ -238,7 +238,7 @@ html {
 }
 
 .username-showing {
-  color: #2b8a3e;
+  color: #006d00;
 }
 
 .button-logout {
@@ -283,7 +283,7 @@ html {
 .footer-credit {
   align-self: flex-end;
   font-size: 1.2rem;
-  color: #1e6216;
+  color: #1b5813;
 }
 
 .say-may-name {
