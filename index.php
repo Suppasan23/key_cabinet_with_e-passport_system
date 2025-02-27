@@ -156,7 +156,7 @@ $blocked_users =
           8.ประตูห้องเรียนห้ามล็อคลูกบิดโดยเด็ดขาด! ให้ล็อคเฉพาะแม่กุญเพียงอย่างเดียว<br />
           9.โปรดช่วยกันรักษาความเป็นระเบียบเรียบร้อยของสถานที่<br />
         </div>
-        <div class="footer-credit"><span class="the-blue"><span class="say-may-name">©</span> ผลงานวิจัยของ <span class="say-may-name">นายศุภสัณห์ ชัยอนันตกูล</span> ตำแหน่ง <span class="say-may-name">วิศวกร</span></span></div>
+        <div class="footer-credit"><span class="the-blue"><span class="say-may-name">©</span> ผลงานวิจัยของ <span class="say-may-name">นายศุภสัณห์ ชัยอนันตกูล</span> คณะวิศวกรรมศาสตร์ มทร.ศรีวิชัย </span></div>
       </div>
     </div>
 
