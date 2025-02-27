@@ -282,8 +282,13 @@ html {
 
 .footer-credit {
   align-self: flex-end;
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   color: #1b5813;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .say-may-name {

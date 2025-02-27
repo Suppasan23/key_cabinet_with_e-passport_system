@@ -82,6 +82,13 @@
   }
 }
 
+/*Input & Button 520-------------------------------------------------*/
+@media (max-width: 32.5em /*520÷16*/) {
+  .footer-credit {
+    flex-direction: column;
+  }
+}
+
 /*Input & Button 496-------------------------------------------------*/
 @media (max-width: 31em /*496÷16*/) {
   .content-username-input {
