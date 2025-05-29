@@ -59,7 +59,7 @@ html {
   /* CSS GRID */
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 24rem auto;
+  grid-template-rows: auto auto auto;
 }
 /*---------------------------------------------------------------------------*/
 
@@ -123,8 +123,8 @@ html {
 
 .content-username-input {
   background-color: #fff4d6;
-  font-size: 1.6rem;
-  height: 2.2rem;
+  font-size: 1.8rem;
+  height: 2.4rem;
   grid-column: 13/23;
   grid-row: 3/4;
   align-self: center;
@@ -140,8 +140,8 @@ html {
 
 .content-password-input {
   background-color: #fff4d6;
-  font-size: 1.6rem;
-  height: 2.2rem;
+  font-size: 1.8rem;
+  height: 2.4rem;
   grid-column: 13/23;
   grid-row: 4/5;
   align-self: center;
@@ -194,7 +194,7 @@ html {
   /* CSS GRID */
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.4fr 0.5fr 2fr 0.1fr 0.5fr 1.2fr 0.2fr;
+  grid-template-rows: 0.4fr 0.5fr 2fr 0.1fr 0.5fr 1.2fr auto 0.2fr;
   column-gap: 0.5rem;
   justify-items: center;
 }
@@ -237,12 +237,57 @@ html {
   gap: 0.8rem;
 }
 
+.content-admin {
+  background-color: #c0d9ec;
+  border-bottom: 0.1rem solid #1e1e1e;
+  grid-column: 1/-1;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.6rem;
+
+  /* CSS GRID */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  row-gap: 1rem;
+  padding: 1rem;
+  justify-items: center;
+}
+
+.admin-header {
+  grid-column: 1/-1;
+  grid-row: 2/3;
+  justify-self: center;
+  align-self: center;
+  font-weight: bold;
+}
+
+.admin-show-logs {
+  grid-column: 1/-1;
+  grid-row: 3/4;
+  justify-self: center;
+  align-self: flex-start;
+}
+
+th {
+  background-color: #495057;
+  color: #f8f9fa;
+}
+
+td {
+  background-color: #f8f9fa;
+}
+
+th,
+td {
+  padding: 0rem 5rem 0rem 5rem;
+}
+
 .username-showing {
   color: #006d00;
 }
 
 .button-logout {
-  background-color: #dee2e6;
+  background-color: #fff9db;
   height: 4rem;
   width: 6rem;
   border-radius: 0.5rem;
@@ -257,6 +302,44 @@ html {
 }
 
 .button-logout:active {
+  transform: scale(0.96);
+}
+
+.button-admin {
+  background-color: #a5d8ff;
+  height: 4rem;
+  width: 6rem;
+  border-radius: 0.5rem;
+  padding: 0rem 0rem 0.2rem 0rem;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.5rem;
+}
+
+.button-admin:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}
+
+.button-admin:active {
+  transform: scale(0.96);
+}
+
+.button-home {
+  background-color: #d8f5a2;
+  height: 4rem;
+  width: 6rem;
+  border-radius: 0.5rem;
+  padding: 0rem 0rem 0.2rem 0rem;
+  font-family: "NotoSansThaiLooped-Regular";
+  font-size: 1.5rem;
+}
+
+.button-home:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}
+
+.button-home:active {
   transform: scale(0.96);
 }
 

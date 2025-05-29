@@ -1,47 +1,11 @@
 <?php 
 session_start();
+require_once 'config.php';
+require_once 'user_blocked_list.php';
 $basePath = dirname($_SERVER['SCRIPT_NAME']); /* echo $basePath;  */
 $err = '';
 
-/* บัญชีผู้ใช้ที่บล็อกเอาไว้ */
-$blocked_users =
-[
-"uthaitip.b",
-"pornpen.j",
-"pranrada.j",
-"penpak.g",
-"kraiwit.c",
-"chaichumpon.c",
-"wilawan.d",
-"angkana.sr",
-"tipawan.k",
-"nitwaree.c",
-"kanchana.t",
-"boonsi.n",
-"pakamas.l",
-"siriporn.a",
-"pakamas.l",
-"napaphat.c",
-"thananya.c",
-"pimpisut.c",
-"piyawan.b",
-"piyawan.b",
-"natthaphon.c",
-"aphiwat.r",
-"pinchai.k",
-"pattraporn.n",
-"patcharee.to",
-"nopadon.k",
-"thanet.s",
-"suphannee.s",
-"atcha.t",
-"nared.s",
-"yothaka.s",
-"sadudee.c",
-"napaporn.s",
-"pitchapa.p",
-"pornchanok.n",
-];
+/*รหัสลับเปิดตู้สำหรับแอดมิน = 0440*/
 ?>
 
 <!DOCTYPE html>
@@ -80,17 +44,38 @@ $blocked_users =
       curl_setopt($ch, CURLOPT_POSTFIELDS, 'username='.$username.'&password='.$password);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       
-      $store = curl_exec($ch);
+      $store = curl_exec($ch); /*ได้ชื่อของผู้ใช้งานมา*/
       
       if ($store === false) {
           $err = '<span>เกิดข้อผิดพลาดในการเชื่อมต่อ</span>';
       } elseif ($store != 'none') {
-          $_SESSION['name'] = $store;
+          $_SESSION['name'] = trim($store); /*เก็บชื่อผู้ใช้งานไว้ใน SESSION*/
+          $_SESSION['id'] = strtolower(trim($username)); /*เก็บ username ของผู้ใช้งานไว้ใน SESSION*/
+
+          /*เป็น ADMIN หรือไม่*/
+          /*ล้าง Logs ที่เก่ากว่า 30 วัน*/
+          if($_SESSION['id'] === 'suppasan.c') {
+            try {
+              // Clean up logs older than 30 days
+              $cleanup = $pdo->prepare("DELETE FROM user_login_logs WHERE login_time < NOW() - INTERVAL 30 DAY");
+              $cleanup->execute();
+            } catch (PDOException $e) {
+              echo "❌ Failed to clean up logs older than 30 days: " . $e->getMessage();
+            }
+          }
+
+          /*Logs ชื่อ, วันที่, เวลา ผู้เข้าใช้งาน*/
+          try {
+            // Insert log
+            $stmt = $pdo->prepare("INSERT INTO user_login_logs (username) VALUES (:username)");
+            $stmt->execute(['username' => $_SESSION['name']]);
+          } catch (PDOException $e) {
+            echo "❌ Failed to log user: " . $e->getMessage();
+          }
       } else {
           $err = '<span>ชื่อหรือรหัสผ่าน<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไม่ถูกต้อง</span>';
       }
     }
-
   }
   ?>
 
@@ -127,19 +112,27 @@ $blocked_users =
         } else { /*ล็อคอินแล้ว*/
         ?>
           <div class="content-logged-in">
-            <div class="content-top-logged-in">รหัสเปิดตู้ของเดือน มีนาคม 2568</div>
-          
-            <div class="content-access-number">6187A</div>
-            <div class="content-old-number">(รหัสเปิดตู้ของเดือนก่อนหน้านี้ 1234A)</div>
+
+            <!-- รหัสเปิดตู้ของผู้ใช้งาน -->
+            <div class="content-top-logged-in">รหัสเปิดตู้ของเดือน พฤษภาคม 2568</div>
+            <div class="content-access-number">2187A</div>
+
+            <!-- รหัสเปิดตู้ของผู้ใช้งานในเดือนก่อนหน้านี้ -->
+            <div class="content-old-number">(รหัสเปิดตู้ของเดือนก่อนหน้านี้ 5505A)</div>
 
             <div class="username-showing_button-logout">
               <div class="username-showing"><?php echo "<a>".$_SESSION['name']."</a>";?></div>
+
+              <?php if($_SESSION['id'] === 'suppasan.c') /*เป็น ADMIN หรือไม่*/{ ?>
+                  <button class="button-admin" onclick="admin()">Admin</button>
+              <?php } ?>
+
               <button class="button-logout" onclick="logout()">Logout</button>
             </div>
-            
-          </div>
-      <?php } ?>
 
+          </div>
+
+        <?php } ?>
 
       <div class="footer">
         <div class="footer-header">
@@ -162,6 +155,12 @@ $blocked_users =
         </div>
       </div>
     </div>
+
+    <script>
+      function admin() {
+        window.location.href = "<?php echo $basePath; ?>" + "/admin.php";
+      }
+    </script>
 
     <script>
       function logout() {
