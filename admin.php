@@ -5,8 +5,15 @@ if (!isset($_SESSION['name']) || $_SESSION['id'] !== 'suppasan.c') {
     header("Location: index.php");
     exit;
 }
+
+$basePath = dirname($_SERVER['SCRIPT_NAME']); /* echo $basePath;  */
+
 require_once 'config.php';
-$basePath = dirname($_SERVER['SCRIPT_NAME']);
+require_once 'key_password_fetching.php';
+
+$passwords = getKeyCabinetPasswords($pdo);
+$currentPassword = htmlspecialchars($passwords['current']);
+$previousPassword = htmlspecialchars($passwords['previous']);
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +29,7 @@ $basePath = dirname($_SERVER['SCRIPT_NAME']);
 <body>
   <div class="Main_Container">
     <div class="logo">
-      <img src="image/RMUTSV_Logo.png" width="36" height="60" />
+      <img src="image/RMUTSV_Logo.png" width="36" height="60" onclick="index()" style="cursor: pointer;" />
     </div>
 
     <div class="header">
@@ -32,13 +39,37 @@ $basePath = dirname($_SERVER['SCRIPT_NAME']);
 
     <div class="content-admin">
 
-      <div class="username-showing_button-logout" style="grid-row: 1/2;">
-        <div class="username-showing"><?php echo "<a>".$_SESSION['name']."</a>";?></div>
+      <!-- สุ่ม/เปลี่ยน รหัสเปิดตู้ของผู้ใช้งานใหม่ -->
+    <form method="post" action="key_password_updating.php">
+      <div class="admin-change-access-number">
+        <button type="button" id="btn-generate-password" class="admin-button random">🎲<br>สุ่มรหัส</button>
+
+        <div class="container-admin-input-random-number">
+          <div id="input-header" style="font-weight: 800;">รหัสเปิดตู้ปัจจุบัน</div>
+          <input id="input-password" class="admin-input-random-number" type="text" name="passkey" value="<?= $currentPassword ?>" required />
+        </div>
+
+        <button type="submit" id="btn-save" class="admin-button save" disabled>🔒<br>บันทึก</button>
+        <button type="reset" id="btn-cancel" class="admin-button cancel" disabled><a style="color: red;">X</a><br>ยกเลิก</button>
+      </div>
+    </form>
+
+
+      <!-- รหัสเปิดตู้ของผู้ใช้งานในเดือนก่อนหน้านี้ -->
+      <div class="content-old-number-admin">
+        (รหัสเปิดก่อนหน้านี้ <?= $previousPassword ?>)</br>
+        รหัสลับเปิดตู้สำหรับแอดมิน = 0440
+      </div>
+
+      <!-- แสดงชื่อผู้ที่เข้ามาใช้งาน -->
+      <div class="admin-name-showing_button-home-logout">
+        <div class="name-showing"><?php echo "<a>".$_SESSION['name']."</a>";?></div>
         <button class="button-home" onclick="index()">Home</button>
         <button class="button-logout" onclick="logout()">Logout</button>
       </div>
 
-      <div class="admin-header">ประวัติการเข้าใช้งาน 1 เดือนย้อนหลัง</div>
+      <!-- Logs ประวัติการเข้าใช้งานของผู้ใช้งาน -->
+      <div class="admin-logs-header">ประวัติการเข้าใช้งาน 1 เดือนย้อนหลัง</div>
       <div class="admin-show-logs">
         <?php 
           $table = 'user_login_logs';
@@ -47,11 +78,11 @@ $basePath = dirname($_SERVER['SCRIPT_NAME']);
               // Get latest 100 rows
               $stmt = $pdo->prepare("SELECT * FROM `$table` ORDER BY `id` DESC LIMIT 100");
               $stmt->execute();
-              $rows = $stmt->fetchAll();
+              $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); // ✅ Ensure associative array
 
               if ($rows) {
                   echo "<table border='1' cellpadding='5' cellspacing='0'>";
-                  
+
                   // Table headers
                   echo "<tr>";
                   echo "<th>No.</th>";
@@ -93,35 +124,80 @@ $basePath = dirname($_SERVER['SCRIPT_NAME']);
 
     </div>
 
-      <div class="footer" style="background-color:#c0d9ec;">
-        <div class="footer-header">
-          กฎระเบียบในการใช้งานตู้เก็บลูกกุญแจระบบรหัสผ่าน
-        </div>
-        <div>
-          1.ให้สิทธิใช้งานเฉพาะอาจารย์ผู้สอนเท่านั้น<br />
-          2.ห้ามเปิดเผยรหัสผ่านให้กับผู้ใด<br />
-          3.เปลี่ยนรหัสผ่านตู้เซฟเดือนละ 1 ครั้ง ในวันที่ 1 ของเดือน<br />
-          4.นำลูกกุญแจกลับมาคืนไว้ที่ตู้ในตำแหน่งเดิมทุกครั้งหลังใช้งาน<br />
-          5.ห้ามนำลูกกุญแจ หรือแม่กุญแจออกนอกพื้นที่อาคาร โดยเด็ดขาด!<br />
-          6.หากทำลูกกุญแจสูญหายให้ซื้อแม่กุญแจรุ่นเดิมตัวใหม่มาเปลี่ยนให้เท่านั้น<br />
-          7.หากทำแม่กุญแจสูญหายให้ซื้อแม่กุญแจรุ่นเดิมตัวใหม่มาเปลี่ยนให้เท่านั้น<br />
-          8.ประตูห้องเรียนห้ามล็อคลูกบิดโดยเด็ดขาด! ให้ล็อคเฉพาะแม่กุญเพียงอย่างเดียว<br />
-          9.โปรดช่วยกันรักษาความเป็นระเบียบเรียบร้อยของสถานที่<br />
-        </div>
-        <div class="footer-credit">
-          <div class="the-blue"><span class="say-may-name">©</span>&nbsp;ผลงานวิจัยของ<span class="say-may-name">&nbsp;นายศุภสัณห์ ชัยอนันตกูล</span></div>
-          <div>&nbsp;ตำแหน่ง&nbsp;วิศวกร&nbsp;คณะวิศวกรรมศาสตร์&nbsp;มทร.ศรีวิชัย</div>
-        </div>
-      </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Store DOM elements
+      const generateBtn = document.getElementById("btn-generate-password");
+      const inputField = document.getElementById("input-password");
+      const saveBtn = document.getElementById("btn-save");
+      const cancelBtn = document.getElementById("btn-cancel");
+      const inputHeader = document.getElementById("input-header");
+
+      // Store original values
+      const originalPassword = inputField.value;
+      const originalInputHeader = inputHeader.innerText;
+      const defaultColor = "#000000";
+      const validColor = "#2b8a3e";
+      const errorColor = "#c92a2a";
+
+      inputHeader.style.color = defaultColor;
+
+      // Toggle Save/Cancel buttons
+      function setButtonsState(enabled) {
+        saveBtn.disabled = !enabled;
+        cancelBtn.disabled = !enabled;
+      }
+
+      // Handle password logic
+      function handlePasswordChange() {
+        const currentValue = inputField.value;
+
+        if (currentValue === originalPassword) {
+          inputHeader.innerText = originalInputHeader;
+          inputHeader.style.color = defaultColor;
+          setButtonsState(false);
+        } else if (currentValue.length === 5 && currentValue.endsWith("A")) {
+          inputHeader.innerText = "ตั้งรหัสผ่านใหม่";
+          inputHeader.style.color = validColor;
+          setButtonsState(true);
+        } else {
+          inputHeader.innerText = "ตั้งรหัสผ่านไม่ถูกต้อง";
+          inputHeader.style.color = errorColor;
+          setButtonsState(false);
+        }
+      }
+
+      // Events
+      generateBtn.addEventListener("click", function () {
+        const randomNumber = Math.floor(1000 + Math.random() * 9000);
+        inputField.value = randomNumber + "A";
+        handlePasswordChange();
+      });
+
+      cancelBtn.addEventListener("click", function () {
+        inputField.value = originalPassword;
+        handlePasswordChange();
+      });
+
+      inputField.addEventListener("input", handlePasswordChange);
+    });
+  </script>
+
+
 
   <script>
     function index() {
       window.location.href = "<?php echo $basePath; ?>/index.php";
     }
+  </script>
+  
+  <script>
     function logout() {
       window.location.href = "<?php echo $basePath; ?>/logout.php";
     }
   </script>
+
 </body>
 </html>
