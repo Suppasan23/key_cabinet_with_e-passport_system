@@ -129,8 +129,8 @@ html {
   margin-top: 1rem;
   padding-left: 0.25rem;
   background-color: #fff4d6;
-  font-size: 1.8rem;
-  height: 2.4rem;
+  font-size: 2.4rem;
+  height: 3.2rem;
   grid-column: 13/23;
   grid-row: 2/3;
   align-self: center;
@@ -149,8 +149,8 @@ html {
   margin-top: 0.5rem;
   padding-left: 0.25rem;
   background-color: #fff4d6;
-  font-size: 1.8rem;
-  height: 2.4rem;
+  font-size: 2.4rem;
+  height: 3.2rem;
   grid-column: 13/23;
   grid-row: 3/4;
   align-self: center;
